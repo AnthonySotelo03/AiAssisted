@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Preferences - VeridianTax Solutions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* GitHub Dark Theme Colors - Updated with Green Accent */
+            --bg-canvas: #0d1117;
+            --bg-canvas-inset: #010409;
+            --bg-canvas-subtle: #161b22;
+            --border-default: #30363d;
+            --border-muted: #21262d;
+            --fg-default: #f0f6fc;
+            --fg-muted: #8b949e;
+            --fg-subtle: #656d76;
+            --accent-fg: #3fb950;
+            --accent-emphasis: #238636;
+            --accent-light: #2ea043;
+            --accent-subtle: #1a7f37;
+            --success-fg: #3fb950;
+            --danger-fg: #f85149;
+            --warning-fg: #d29922;
+            --btn-primary-bg: #238636;
+            --btn-primary-hover-bg: #2ea043;
+            --btn-secondary-bg: #21262d;
+            --btn-secondary-hover-bg: #30363d;
+            --card-shadow: 0 8px 24px #010409;
+            --border-radius: 6px;
+            --border-radius-lg: 12px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--fg-default);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            background-color: var(--bg-canvas);
+            min-height: 100vh;
+        }
+
+        /* GitHub-style Header */
+        .header-section {
+            background-color: var(--bg-canvas-subtle);
+            border-bottom: 1px solid var(--border-default);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .brand-logo {
+            color: var(--fg-default);
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-logo:hover {
+            color: var(--accent-fg);
+        }
+
+        .brand-highlight {
+            color: var(--accent-fg);
+            font-weight: 700;
+        }
+
+        .nav-link-dark {
+            color: var(--fg-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link-dark:hover {
+            color: var(--fg-default);
+        }
+
+        /* GitHub-style Card */
+        .preference-card {
+            background-color: var(--bg-canvas-subtle);
+            border: 1px solid var(--border-default);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .card-header-dark {
+            background-color: var(--bg-canvas-subtle);
+            border-bottom: 1px solid var(--border-default);
+            padding: 1.5rem 2rem;
+        }
+
+        .card-header-dark .display-6 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--fg-default);
+            font-size: 1.75rem;
+        }
+
+        .card-header-dark .lead {
+            color: var(--fg-muted);
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        .card-body-dark {
+            padding: 2rem;
+            background-color: var(--bg-canvas-subtle);
+        }
+
+        /* GitHub-style Form Controls */
+        .preference-group {
+            background-color: var(--bg-canvas);
+            border: 1px solid var(--border-muted);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .preference-group:hover {
+            border-color: var(--border-default);
+            background-color: var(--bg-canvas-inset);
+        }
+
+        .form-check-input {
+            width: 1rem;
+            height: 1rem;
+            background-color: var(--bg-canvas);
+            border: 1px solid var(--border-default);
+            border-radius: 3px;
+            margin-top: 0.125rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-check-input:hover {
+            border-color: var(--accent-fg);
+            box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.2);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--accent-emphasis);
+            border-color: var(--accent-emphasis);
+        }
+
+        .form-check-input:checked:hover {
+            background-color: var(--accent-light);
+            border-color: var(--accent-light);
+            box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.3);
+        }
+
+        .form-check-input:focus {
+            border-color: var(--accent-fg);
+            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.3);
+        }
+
+        .form-check-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--fg-default);
+            cursor: pointer;
+            margin-left: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .form-check-label small {
+            color: var(--fg-muted);
+            font-weight: 400;
+        }
+
+        .preference-icon {
+            color: var(--fg-muted);
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Enhanced hover effect for preference groups when checkbox is hovered */
+        .preference-group:has(.form-check-input:hover) {
+            border-color: var(--accent-fg);
+            background-color: rgba(35, 134, 54, 0.03);
+        }
+
+        .preference-group:has(.form-check-input:hover) .preference-icon {
+            color: var(--accent-fg);
+        }
+
+        /* GitHub-style Buttons */
+        .btn-github-primary {
+            background-color: var(--btn-primary-bg);
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            color: var(--fg-default);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: var(--border-radius);
+            transition: all 0.2s ease;
+        }
+
+        .btn-github-primary:hover {
+            background-color: var(--btn-primary-hover-bg);
+            color: var(--fg-default);
+            border-color: rgba(240, 246, 252, 0.2);
+        }
+
+        .btn-github-primary:focus {
+            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.3);
+        }
+
+        .btn-github-secondary {
+            background-color: var(--btn-secondary-bg);
+            border: 1px solid var(--border-default);
+            color: var(--fg-default);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: var(--border-radius);
+            transition: all 0.2s ease;
+        }
+
+        .btn-github-secondary:hover {
+            background-color: var(--btn-secondary-hover-bg);
+            border-color: var(--fg-subtle);
+            color: var(--fg-default);
+        }
+
+        .btn-github-secondary:focus {
+            box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.3);
+        }
+
+        .btn-github-secondary.btn-select-mode {
+            border-color: var(--accent-emphasis);
+            background-color: rgba(35, 134, 54, 0.1);
+        }
+
+        .btn-github-secondary.btn-deselect-mode {
+            border-color: var(--danger-fg);
+            background-color: rgba(248, 81, 73, 0.1);
+            color: var(--danger-fg);
+        }
+
+        /* Selection Counter - GitHub style */
+        .selection-counter {
+            background-color: var(--bg-canvas);
+            border: 1px solid var(--border-muted);
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--fg-muted);
+        }
+
+        .selection-counter.has-selections {
+            border-color: var(--accent-emphasis);
+            background-color: rgba(35, 134, 54, 0.05);
+            color: var(--accent-fg);
+        }
+
+        .counter-icon {
+            margin-right: 0.5rem;
+        }
+
+        /* Progress Bar - GitHub style with Green theme */
+        .progress-wrapper {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--bg-canvas);
+            border: 1px solid var(--border-muted);
+            border-radius: var(--border-radius);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--fg-muted);
+            font-weight: 500;
+        }
+
+        .progress-github {
+            height: 0.5rem;
+            background-color: var(--border-muted);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-github {
+            background-color: var(--accent-emphasis);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--fg-muted);
+        }
+
+        .progress-stats.has-progress {
+            color: var(--accent-fg);
+        }
+
+        /* GitHub-style Modal */
+        .modal-content-dark {
+            background-color: var(--bg-canvas-subtle);
+            border: 1px solid var(--border-default);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--card-shadow);
+        }
+
+        .modal-header-dark {
+            background-color: var(--bg-canvas-subtle);
+            border-bottom: 1px solid var(--border-default);
+            color: var(--fg-default);
+        }
+
+        .modal-title-dark {
+            color: var(--fg-default);
+            font-weight: 600;
+        }
+
+        .modal-body-dark {
+            background-color: var(--bg-canvas-subtle);
+            color: var(--fg-default);
+        }
+
+        .modal-footer-dark {
+            background-color: var(--bg-canvas);
+            border-top: 1px solid var(--border-default);
+        }
+
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .preference-summary {
+            background-color: var(--bg-canvas);
+            border: 1px solid var(--border-muted);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .preference-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            color: var(--fg-muted);
+            font-size: 0.875rem;
+        }
+
+        .preference-item.selected {
+            color: var(--accent-fg);
+        }
+
+        .preference-item .bi {
+            margin-right: 0.5rem;
+            width: 1rem;
+        }
+
+        /* Status Messages - GitHub style */
+        .status-container {
+            margin-top: 1rem;
+        }
+
+        .alert-github {
+            border: 1px solid var(--border-default);
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            background-color: var(--bg-canvas);
+        }
+
+        .alert-github.alert-info {
+            border-color: var(--accent-emphasis);
+            background-color: rgba(35, 134, 54, 0.05);
+            color: var(--accent-fg);
+        }
+
+        .alert-github.alert-warning {
+            border-color: var(--warning-fg);
+            background-color: rgba(210, 153, 34, 0.05);
+            color: var(--warning-fg);
+        }
+
+        .alert-github.alert-success {
+            border-color: var(--success-fg);
+            background-color: rgba(63, 185, 80, 0.05);
+            color: var(--success-fg);
+        }
+
+        /* Form Footer - GitHub style */
+        .form-footer {
+            background-color: var(--bg-canvas);
+            border-top: 1px solid var(--border-default);
+            padding: 1.5rem 2rem;
+            margin: 0 -2rem -2rem -2rem;
+            border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+        }
+
+        /* GitHub-style Footer */
+        .page-footer {
+            background-color: var(--bg-canvas-subtle);
+            border-top: 1px solid var(--border-default);
+            color: var(--fg-muted);
+            padding: 2rem 0;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+        }
+
+        .footer-link {
+            color: var(--fg-muted);
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-fg);
+        }
+
+        /* Loading States */
+        .spinner-github {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid var(--border-muted);
+            border-top: 2px solid var(--fg-default);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar styling for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-canvas);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-default);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--fg-subtle);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .card-header-dark,
+            .card-body-dark {
+                padding: 1.5rem;
+            }
+
+            .form-footer {
+                margin: 0 -1.5rem -1.5rem -1.5rem;
+                padding: 1.5rem;
+            }
+
+            .progress-wrapper {
+                margin: 1rem 0;
+                padding: 0.75rem;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .preference-group:focus-within {
+            outline: 2px solid var(--accent-emphasis);
+            outline-offset: 2px;
+        }
+
+        /* Animation for smooth transitions */
+        * {
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        /* Modal backdrop for dark theme */
+        .modal-backdrop {
+            background-color: rgba(1, 4, 9, 0.8);
+        }
+
+        /* Fallback for browsers that don't support :has() selector */
+        @supports not selector(:has(*)) {
+            .preference-group:hover {
+                border-color: var(--accent-fg);
+                background-color: rgba(35, 134, 54, 0.03);
+            }
+
+            .preference-group:hover .preference-icon {
+                color: var(--accent-fg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- GitHub-style Header -->
+        <header class="header-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <a href="#" class="brand-logo">
+                            <i class="bi bi-calculator me-2" style="color: var(--accent-fg);"></i>
+                            <span class="brand-highlight">Veridian</span>Tax Solutions
+                        </a>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <nav class="d-inline-flex gap-3">
+                            <a href="#" class="nav-link-dark">Dashboard</a>
+                            <a href="#" class="nav-link-dark">Settings</a>
+                            <a href="#" class="nav-link-dark">Support</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-10">
+                    <div class="preference-card">
+                        <!-- Card Header -->
+                        <div class="card-header-dark">
+                            <h1 class="display-6 mb-2">
+                                <i class="bi bi-envelope-heart me-2" style="color: var(--accent-fg);"></i>
+                                Email Preferences
+                            </h1>
+                            <p class="lead">
+                                Customize your communication preferences to receive the most relevant updates for your tax services
+                            </p>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="card-body-dark">
+                            <form id="emailPreferencesForm" action="https://www.w3schools.com/action_page.php" method="POST" novalidate>
+                                
+                                <!-- Selection Counter -->
+                                <div class="selection-counter" id="selectionCounter">
+                                    <i class="bi bi-list-check counter-icon"></i>
+                                    <span id="counterText">0 of 4 preferences selected</span>
+                                </div>
+
+                                <!-- Preference Options -->
+                                <div class="preferences-section">
+                                    <div class="preference-group" data-preference="critical">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="critical_alerts" id="criticalAlerts" name="preferences[]">
+                                            <label class="form-check-label" for="criticalAlerts">
+                                                <i class="bi bi-exclamation-triangle-fill preference-icon"></i>
+                                                Critical alerts and notifications about your tax return
+                                                <small class="d-block mt-1">Important updates that require immediate attention</small>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="preference-group" data-preference="offers">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="special_offers" id="specialOffers" name="preferences[]">
+                                            <label class="form-check-label" for="specialOffers">
+                                                <i class="bi bi-tag-fill preference-icon"></i>
+                                                Information about special offers for tax services
+                                                <small class="d-block mt-1">Exclusive deals and promotional offers</small>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="preference-group" data-preference="irs">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="irs_updates" id="irsUpdates" name="preferences[]">
+                                            <label class="form-check-label" for="irsUpdates">
+                                                <i class="bi bi-calendar-check-fill preference-icon"></i>
+                                                Receive notifications of IRS changes and deadlines
+                                                <small class="d-block mt-1">Stay informed about tax law changes and important dates</small>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="preference-group" data-preference="newsletter">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="monthly_newsletter" id="monthlyNewsletter" name="preferences[]">
+                                            <label class="form-check-label" for="monthlyNewsletter">
+                                                <i class="bi bi-newspaper preference-icon"></i>
+                                                Learn from a monthly tax newsletter with tax news and tips
+                                                <small class="d-block mt-1">Educational content and expert tax advice</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Progress Indicator -->
+                                <div class="progress-wrapper">
+                                    <div class="progress-label">
+                                        <span><i class="bi bi-bar-chart me-1"></i>Selection Progress</span>
+                                        <span id="progressText">0%</span>
+                                    </div>
+                                    <div class="progress-github">
+                                        <div class="progress-bar-github" id="progressBar" style="width: 0%"></div>
+                                    </div>
+                                    <div class="progress-stats" id="progressStats">
+                                        <span>Complete your selection</span>
+                                        <span id="remainingText">4 remaining</span>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden Inputs -->
+                                <input type="hidden" name="timestamp" id="timestamp">
+                                <input type="hidden" name="user_id" value="user_12345">
+
+                                <!-- Form Footer -->
+                                <div class="form-footer">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                                            <button type="button" class="btn btn-github-secondary" id="toggleAllBtn">
+                                                <i class="bi bi-check-all me-2"></i>
+                                                <span class="btn-text">Select All</span>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 text-center text-md-end">
+                                            <button type="submit" class="btn btn-github-primary btn-lg" id="saveBtn">
+                                                <span class="btn-content">
+                                                    <i class="bi bi-check-circle me-2"></i>
+                                                    Save Preferences
+                                                </span>
+                                                <span class="btn-loading d-none">
+                                                    <span class="spinner-github me-2"></span>
+                                                    Saving...
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Status Messages -->
+                                    <div class="status-container">
+                                        <div class="d-none" id="statusMessage">
+                                            <div class="alert-github" id="statusAlert">
+                                                <i class="bi bi-info-circle-fill me-2"></i>
+                                                <span id="statusText">Processing your request...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Help Text -->
+                                    <div class="text-center mt-3">
+                                        <small style="color: var(--fg-muted);">
+                                            <i class="bi bi-shield-lock me-1"></i>
+                                            Your preferences are securely stored and can be updated at any time
+                                        </small>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content modal-content-dark">
+                    <div class="modal-header modal-header-dark">
+                        <h5 class="modal-title modal-title-dark" id="confirmationModalLabel">
+                            <i class="bi bi-question-circle me-2"></i>
+                            Confirm Preferences Submission
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body modal-body-dark">
+                        <p class="mb-3">You are about to save your email preferences and will be redirected to complete the process.</p>
+                        
+                        <h6 class="mb-3">Selected Preferences:</h6>
+                        <div class="preference-summary" id="preferenceSummary">
+                            <div class="preference-item" data-pref="critical_alerts">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <span>Critical alerts and notifications about your tax return</span>
+                            </div>
+                            <div class="preference-item" data-pref="special_offers">
+                                <i class="bi bi-tag-fill"></i>
+                                <span>Information about special offers for tax services</span>
+                            </div>
+                            <div class="preference-item" data-pref="irs_updates">
+                                <i class="bi bi-calendar-check-fill"></i>
+                                <span>Receive notifications of IRS changes and deadlines</span>
+                            </div>
+                            <div class="preference-item" data-pref="monthly_newsletter">
+                                <i class="bi bi-newspaper"></i>
+                                <span>Learn from a monthly tax newsletter with tax news and tips</span>
+                            </div>
+                        </div>
+
+                        <div class="alert-github alert-info mt-3">
+                            <i class="bi bi-info-circle me-2"></i>
+                            You will be redirected to: <strong>https://www.w3schools.com/action_page.php</strong>
+                        </div>
+
+                        <p class="text-muted mb-0">
+                            <small>
+                                <i class="bi bi-shield-check me-1"></i>
+                                Your preferences will be securely transmitted and processed.
+                            </small>
+                        </p>
+                    </div>
+                    <div class="modal-footer modal-footer-dark">
+                        <button type="button" class="btn btn-github-secondary" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle me-2"></i>
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-github-primary" id="confirmSubmitBtn">
+                            <i class="bi bi-arrow-right me-2"></i>
+                            Continue to Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- GitHub-style Footer -->
+        <footer class="page-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2026 VeridianTax Solutions. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <a href="#" class="footer-link me-3">Privacy Policy</a>
+                        <a href="#" class="footer-link me-3">Terms of Service</a>
+                        <a href="#" class="footer-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('emailPreferencesForm');
+            const checkboxes = document.querySelectorAll('input[name="preferences[]"]');
+            const toggleAllBtn = document.getElementById('toggleAllBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+            const statusMessage = document.getElementById('statusMessage');
+            const statusAlert = document.getElementById('statusAlert');
+            const statusText = document.getElementById('statusText');
+            const timestampInput = document.getElementById('timestamp');
+            const selectionCounter = document.getElementById('selectionCounter');
+            const counterText = document.getElementById('counterText');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const progressStats = document.getElementById('progressStats');
+            const remainingText = document.getElementById('remainingText');
+            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            const preferenceSummary = document.getElementById('preferenceSummary');
+            
+            // Load saved preferences
+            loadSavedPreferences();
+            
+            // Enhanced toggle functionality
+            toggleAllBtn.addEventListener('click', function() {
+                const checkedCount = getCheckedCount();
+                const totalCount = checkboxes.length;
+                const shouldSelectAll = checkedCount < totalCount;
+                
+                // GitHub-style button feedback
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+                
+                // Smooth staggered animation
+                checkboxes.forEach((checkbox, index) => {
+                    setTimeout(() => {
+                        checkbox.checked = shouldSelectAll;
+                        animateCheckbox(checkbox);
+                    }, index * 60);
+                });
+                
+                setTimeout(() => {
+                    updateAllStates();
+                }, checkboxes.length * 60 + 100);
+            });
+            
+            // Form submission with confirmation modal
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Always prevent default submission
+                
+                const checkedCount = getCheckedCount();
+                
+                if (checkedCount === 0) {
+                    showValidationError();
+                    return;
+                }
+                
+                // Update preference summary in modal
+                updatePreferenceSummary();
+                
+                // Show confirmation modal
+                confirmationModal.show();
+            });
+            
+            // Confirm submission button in modal
+            confirmSubmitBtn.addEventListener('click', function() {
+                // Hide modal
+                confirmationModal.hide();
+                
+                // Set timestamp
+                timestampInput.value = new Date().toISOString();
+                
+                // Save to localStorage
+                saveToLocalStorage();
+                
+                // Show loading state
+                showLoadingState();
+                
+                // Submit form after a brief delay for user feedback
+                setTimeout(() => {
+                    form.submit();
+                }, 1000);
+            });
+            
+            // Checkbox change handling
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateAllStates();
+                    animateCheckbox(this);
+                });
+            });
+            
+            // Update preference summary in modal
+            function updatePreferenceSummary() {
+                const selectedValues = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+                
+                // Update each preference item in the summary
+                preferenceSummary.querySelectorAll('.preference-item').forEach(item => {
+                    const prefValue = item.getAttribute('data-pref');
+                    if (selectedValues.includes(prefValue)) {
+                        item.classList.add('selected');
+                    } else {
+                        item.classList.remove('selected');
+                    }
+                });
+            }
+            
+            // State management functions
+            function updateAllStates() {
+                updateToggleButton();
+                updateSelectionCounter();
+                updateProgressBar();
+            }
+            
+            function updateToggleButton() {
+                const checkedCount = getCheckedCount();
+                const totalCount = checkboxes.length;
+                const icon = toggleAllBtn.querySelector('i');
+                const text = toggleAllBtn.querySelector('.btn-text');
+                
+                // Reset classes
+                toggleAllBtn.className = 'btn btn-github-secondary';
+                
+                if (checkedCount === 0) {
+                    icon.className = 'bi bi-check-all me-2';
+                    text.textContent = 'Select All';
+                } else if (checkedCount === totalCount) {
+                    icon.className = 'bi bi-x-circle me-2';
+                    text.textContent = 'Deselect All';
+                    toggleAllBtn.classList.add('btn-deselect-mode');
+                } else {
+                    icon.className = 'bi bi-check-all me-2';
+                    text.textContent = `Select All (${totalCount - checkedCount} more)`;
+                    toggleAllBtn.classList.add('btn-select-mode');
+                }
+            }
+            
+            function updateSelectionCounter() {
+                const checkedCount = getCheckedCount();
+                const totalCount = checkboxes.length;
+                counterText.textContent = `${checkedCount} of ${totalCount} preferences selected`;
+                
+                if (checkedCount > 0) {
+                    selectionCounter.classList.add('has-selections');
+                } else {
+                    selectionCounter.classList.remove('has-selections');
+                }
+            }
+            
+            function updateProgressBar() {
+                const checkedCount = getCheckedCount();
+                const totalCount = checkboxes.length;
+                const percentage = (checkedCount / totalCount) * 100;
+                const remaining = totalCount - checkedCount;
+                
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${Math.round(percentage)}%`;
+                
+                // Update progress stats
+                if (checkedCount === 0) {
+                    progressStats.textContent = 'Complete your selection';
+                    remainingText.textContent = `${remaining} remaining`;
+                    progressStats.classList.remove('has-progress');
+                } else if (checkedCount === totalCount) {
+                    progressStats.innerHTML = '<span><i class="bi bi-check-circle me-1"></i>All preferences selected</span>';
+                    remainingText.textContent = 'Complete!';
+                    progressStats.classList.add('has-progress');
+                } else {
+                    progressStats.innerHTML = '<span>Selection in progress</span>';
+                    remainingText.textContent = `${remaining} remaining`;
+                    progressStats.classList.add('has-progress');
+                }
+            }
+            
+            function getCheckedCount() {
+                return Array.from(checkboxes).filter(cb => cb.checked).length;
+            }
+            
+            function animateCheckbox(checkbox) {
+                const preferenceGroup = checkbox.closest('.preference-group');
+                preferenceGroup.style.transform = 'scale(1.01)';
+                setTimeout(() => {
+                    preferenceGroup.style.transform = 'scale(1)';
+                }, 150);
+            }
+            
+            function showLoadingState() {
+                saveBtn.disabled = true;
+                toggleAllBtn.disabled = true;
+                checkboxes.forEach(cb => cb.disabled = true);
+                
+                saveBtn.querySelector('.btn-content').classList.add('d-none');
+                saveBtn.querySelector('.btn-loading').classList.remove('d-none');
+                
+                showStatusMessage('Redirecting to submission page...', 'info');
+            }
+            
+            function showValidationError() {
+                showStatusMessage('Please select at least one email preference before saving.', 'warning');
+                
+                // GitHub-style subtle animation
+                toggleAllBtn.style.animation = 'pulse 0.5s ease-in-out 2';
+                setTimeout(() => {
+                    toggleAllBtn.style.animation = '';
+                }, 1000);
+            }
+            
+            function showStatusMessage(message, type) {
+                const alertClasses = {
+                    'info': 'alert-info',
+                    'warning': 'alert-warning',
+                    'success': 'alert-success'
+                };
+                
+                statusAlert.className = `alert-github ${alertClasses[type]}`;
+                statusText.textContent = message;
+                statusMessage.classList.remove('d-none');
+                
+                if (type === 'warning') {
+                    setTimeout(() => {
+                        statusMessage.classList.add('d-none');
+                    }, 4000);
+                }
+            }
+            
+            function saveToLocalStorage() {
+                const selectedPreferences = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+                
+                localStorage.setItem('emailPreferences', JSON.stringify({
+                    preferences: selectedPreferences,
+                    lastSaved: new Date().toISOString()
+                }));
+            }
+            
+            function loadSavedPreferences() {
+                const saved = localStorage.getItem('emailPreferences');
+                if (saved) {
+                    try {
+                        const data = JSON.parse(saved);
+                        const preferences = data.preferences || data;
+                        checkboxes.forEach(checkbox => {
+                            checkbox.checked = preferences.includes(checkbox.value);
+                        });
+                        updateAllStates();
+                    } catch (e) {
+                        console.warn('Could not load saved preferences:', e);
+                    }
+                }
+            }
+            
+            // Initialize all states
+            updateAllStates();
+        });
+        
+        // Enhanced keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'a') {
+                    e.preventDefault();
+                    document.getElementById('toggleAllBtn').click();
+                } else if (e.key === 's' && !e.shiftKey) {
+                    e.preventDefault();
+                    document.getElementById('saveBtn').click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
